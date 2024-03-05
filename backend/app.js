@@ -12,9 +12,24 @@ const PORT = process.env.PORT || 4000
 app.use(express.json())
 app.use(
     cors({
-        origin: "http://localhost:3000",
-        credentials: true,
-    })
+        "version": 2,
+        "builds": [
+          {
+            "src": "./index.js",
+            "use": "@vercel/node"
+          }
+        ],
+        "routes": [
+          {
+            "src": "/(.*)",
+            "dest": "./index.js",
+            "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+            "headers": {
+              "Access-Control-Allow-Origin": "*"
+            }
+          }
+        ]
+      })
 )
 readdirSync('./routes').map((route) => app.use('/api/v1', transactionsRouter))
 
