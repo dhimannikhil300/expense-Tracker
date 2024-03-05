@@ -10,13 +10,12 @@ require('dotenv').config()
 const PORT = process.env.PORT || 4000
 
 app.use(express.json())
-app.use(cors(
-    {
-        origin: ["https://deploy-mern-12h1.vercel.app"],
-        methods: ["POST", "GET"],
+app.use(
+    cors({
+        origin: "http://localhost:3000",
         credentials: true,
-    }
-))
+    })
+)
 readdirSync('./routes').map((route) => app.use('/api/v1', transactionsRouter))
 
 const server = () => {
